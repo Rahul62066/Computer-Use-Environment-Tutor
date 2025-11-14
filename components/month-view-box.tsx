@@ -36,13 +36,13 @@ export default function MonthViewBox({
     <div
       className={cn(
         "group relative flex flex-col items-center gap-y-2 border",
-        "transition-all hover:bg-violet-50",
+        "transition-all hover:bg-muted/40",
       )}
       onClick={handleClick}
     >
       <div className="flex flex-col items-center">
         {rowIndex === 0 && (
-          <h4 className="text-xs text-gray-500">
+          <h4 className="text-xs text-muted-foreground">
             {day.format("ddd").toUpperCase()}
           </h4>
         )}

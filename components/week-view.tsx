@@ -23,9 +23,9 @@ export default function WeekView() {
   return (
     <>
       <div className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr_1fr_1fr] place-items-center px-4 py-2">
-        <div className="w-16 border-r border-gray-300">
+        <div className="w-16 border-r border-border">
           <div className="relative h-16">
-            <div className="absolute top-2 text-xs text-gray-600">GMT +2</div>
+            <div className="absolute top-2 text-xs text-muted-foreground">GMT +2</div>
           </div>
         </div>
 
@@ -53,10 +53,10 @@ export default function WeekView() {
       <ScrollArea className="h-[70vh]">
         <div className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr_1fr_1fr] px-4 py-2">
           {/* Time Column */}
-          <div className="w-16 border-r border-gray-300">
+          <div className="w-16 border-r border-border">
             {getHours.map((hour, index) => (
               <div key={index} className="relative h-16">
-                <div className="absolute -top-2 text-xs text-gray-600">
+                <div className="absolute -top-2 text-xs text-muted-foreground">
                   {hour.format("HH:mm")}
                 </div>
               </div>
@@ -72,11 +72,11 @@ export default function WeekView() {
                 .add(index, "day");
 
               return (
-                <div key={index} className="relative border-r border-gray-300">
+                <div key={index} className="relative border-r border-border">
                   {getHours.map((hour, i) => (
-                    <div
-                      key={i}
-                      className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-gray-300 hover:bg-gray-100"
+                        <div
+                          key={i}
+                          className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-border hover:bg-muted/40"
                       onClick={() => {
                         setDate(dayDate.hour(hour.hour()));
                         openPopover();

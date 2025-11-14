@@ -33,7 +33,7 @@ export default function MyCalendars() {
               <div className="grid gap-1.5 leading-none">
                 <label
                   htmlFor={cal.id}
-                  className="text-sm font-medium leading-none text-gray-600 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm font-medium leading-none text-muted-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {cal.title}
                 </label>

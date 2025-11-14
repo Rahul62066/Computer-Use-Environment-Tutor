@@ -25,9 +25,9 @@ export default function DayView() {
   return (
     <>
       <div className="grid grid-cols-[auto_auto_1fr] px-4">
-        <div className="w-16 border-r border-gray-300 text-xs">GMT +2</div>
+        <div className="w-16 border-r border-border text-xs">GMT +2</div>
         <div className="flex w-16 flex-col items-center">
-          <div className={cn("text-xs", isToday && "text-blue-600")}>
+          <div className={cn("text-xs", isToday && "text-blue-600")}> 
             {userSelectedDate.format("ddd")}{" "}
           </div>{" "}
           <div
@@ -45,10 +45,10 @@ export default function DayView() {
       <ScrollArea className="h-[70vh]">
         <div className="grid grid-cols-[auto_1fr] p-4">
           {/* Time Column */}
-          <div className="w-16 border-r border-gray-300">
+          <div className="w-16 border-r border-border">
             {getHours.map((hour, index) => (
               <div key={index} className="relative h-16">
-                <div className="absolute -top-2 text-xs text-gray-600">
+                <div className="absolute -top-2 text-xs text-muted-foreground">
                   {hour.format("HH:mm")}
                 </div>
               </div>
@@ -56,11 +56,11 @@ export default function DayView() {
           </div>
 
           {/* Day/Boxes Column */}
-          <div className="relative border-r border-gray-300">
+          <div className="relative border-r border-border">
             {getHours.map((hour, i) => (
               <div
                 key={i}
-                className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-gray-300 hover:bg-gray-100"
+                className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-border hover:bg-muted/40"
                 onClick={() => {
                   setDate(userSelectedDate.hour(hour.hour()));
                   openPopover();

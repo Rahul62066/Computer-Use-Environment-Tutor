@@ -76,12 +76,15 @@ export default function EventPopover({
         } else if (entryType === "task") {
           // For tasks, we need to set dueDate instead of date/time
           const taskFormData = new FormData();
-          taskFormData.set('title', formData.get('title') as string);
-          taskFormData.set('description', formData.get('description') as string);
-          const dueDate = formData.get('date') as string;
-          const dueTime = formData.get('time') as string;
+          taskFormData.set("title", formData.get("title") as string);
+          taskFormData.set(
+            "description",
+            formData.get("description") as string,
+          );
+          const dueDate = formData.get("date") as string;
+          const dueTime = formData.get("time") as string;
           if (dueDate && dueTime) {
-            taskFormData.set('dueDate', `${dueDate}T${dueTime}:00`);
+            taskFormData.set("dueDate", `${dueDate}T${dueTime}:00`);
           }
           result = await createTask(taskFormData);
         } else if (entryType === "appointment") {
@@ -133,13 +136,13 @@ export default function EventPopover({
             />
           </div>
           <div className="flex items-center justify-between">
-              <Button
+            <Button
               type="button"
               onClick={() => setEntryType("event")}
               className={cn(
                 entryType === "event"
                   ? "bg-blue-100 text-blue-700 hover:bg-blue-100 hover:text-blue-700"
-                  : "bg-transparent text-foreground hover:bg-secondary"
+                  : "bg-transparent text-foreground hover:bg-secondary",
               )}
             >
               Event
@@ -150,7 +153,7 @@ export default function EventPopover({
               className={cn(
                 entryType === "task"
                   ? "bg-blue-100 text-blue-700 hover:bg-blue-100 hover:text-blue-700"
-                  : "bg-transparent text-foreground hover:bg-secondary"
+                  : "bg-transparent text-foreground hover:bg-secondary",
               )}
             >
               Task
@@ -161,10 +164,13 @@ export default function EventPopover({
               className={cn(
                 entryType === "appointment"
                   ? "bg-blue-100 text-blue-700 hover:bg-blue-100 hover:text-blue-700"
-                  : "bg-transparent text-foreground hover:bg-secondary"
+                  : "bg-transparent text-foreground hover:bg-secondary",
               )}
             >
-              Appointment <sup className="bg-blue-500 text-white px-1 text-xs rounded">new</sup>
+              Appointment{" "}
+              <sup className="rounded bg-blue-500 px-1 text-xs text-white">
+                new
+              </sup>
             </Button>
           </div>
 

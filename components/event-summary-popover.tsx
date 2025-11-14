@@ -1,80 +1,87 @@
-'use client'
+"use client";
 
-import React, { useRef, useEffect, useState, useTransition } from 'react'
-import dayjs from 'dayjs'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { IoCloseSharp } from "react-icons/io5"
-import { CalendarEventType } from '@/lib/store'
-import { updateEvent, deleteEvent } from '@/app/actions/event-actions'
-import { FiEdit, FiTrash2, FiClock } from 'react-icons/fi'
-import { HiOutlineUsers, HiOutlineMenuAlt2 } from 'react-icons/hi'
-import { cn } from '@/lib/utils'
+import React, { useRef, useEffect, useState, useTransition } from "react";
+import dayjs from "dayjs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { IoCloseSharp } from "react-icons/io5";
+import { CalendarEventType } from "@/lib/store";
+import { updateEvent, deleteEvent } from "@/app/actions/event-actions";
+import { FiEdit, FiTrash2, FiClock } from "react-icons/fi";
+import { HiOutlineUsers, HiOutlineMenuAlt2 } from "react-icons/hi";
+import { cn } from "@/lib/utils";
 
 interface EventSummaryPopoverProps {
-  isOpen: boolean
-  onClose: () => void
-  event: CalendarEventType
+  isOpen: boolean;
+  onClose: () => void;
+  event: CalendarEventType;
 }
 
-export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopoverProps) {
-  const popoverRef = useRef<HTMLDivElement>(null)
-  const [isEditing, setIsEditing] = useState(false)
-  const [isPending, startTransition] = useTransition()
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<boolean | null>(null)
+export function EventSummaryPopover({
+  isOpen,
+  onClose,
+  event,
+}: EventSummaryPopoverProps) {
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean | null>(null);
 
   // Form state
-  const [title, setTitle] = useState(event.title)
-  const [description, setDescription] = useState(event.description || '')
-  const [date, setDate] = useState(dayjs(event.date).format('YYYY-MM-DD'))
-  const [time, setTime] = useState(dayjs(event.date).format('HH:mm'))
-  const [guests, setGuests] = useState(event.guests || '')
+  const [title, setTitle] = useState(event.title);
+  const [description, setDescription] = useState(event.description || "");
+  const [date, setDate] = useState(dayjs(event.date).format("YYYY-MM-DD"));
+  const [time, setTime] = useState(dayjs(event.date).format("HH:mm"));
+  const [guests, setGuests] = useState(event.guests || "");
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
-        onClose()
+      if (
+        popoverRef.current &&
+        !popoverRef.current.contains(e.target as Node)
+      ) {
+        onClose();
       }
-    }
+    };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen, onClose])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   const handleDelete = () => {
-    if (!confirm('Are you sure you want to delete this event?')) return
+    if (!confirm("Are you sure you want to delete this event?")) return;
 
     startTransition(async () => {
       try {
-        const result = await deleteEvent(event.id)
-        if ('error' in result) {
-          setError(result.error)
+        const result = await deleteEvent(event.id);
+        if ("error" in result) {
+          setError(result.error);
         } else {
-          setSuccess(true)
+          setSuccess(true);
           setTimeout(() => {
-            onClose()
-          }, 1000)
+            onClose();
+          }, 1000);
         }
       } catch {
-        setError('Failed to delete event')
+        setError("Failed to delete event");
       }
-    })
-  }
+    });
+  };
 
   const handleUpdate = () => {
-    setError(null)
-    setSuccess(null)
+    setError(null);
+    setSuccess(null);
 
     startTransition(async () => {
       try {
-        const startDateTime = new Date(`${date}T${time}:00`)
-        const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000)
+        const startDateTime = new Date(`${date}T${time}:00`);
+        const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
 
         const result = await updateEvent(event.id, {
           title,
@@ -82,24 +89,24 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
           date: startDateTime,
           endDate: endDateTime,
           guests: guests || undefined,
-        })
+        });
 
-        if ('error' in result) {
-          setError(result.error)
+        if ("error" in result) {
+          setError(result.error);
         } else {
-          setSuccess(true)
-          setIsEditing(false)
+          setSuccess(true);
+          setIsEditing(false);
           setTimeout(() => {
-            onClose()
-          }, 1000)
+            onClose();
+          }, 1000);
         }
       } catch {
-        setError('Failed to update event')
+        setError("Failed to update event");
       }
-    })
-  }
+    });
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div
@@ -112,7 +119,9 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">{isEditing ? 'Edit Event' : 'Event Details'}</h2>
+          <h2 className="text-xl font-semibold">
+            {isEditing ? "Edit Event" : "Event Details"}
+          </h2>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <IoCloseSharp className="h-4 w-4" />
           </Button>
@@ -177,11 +186,15 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
             </div>
 
             <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setIsEditing(false)} disabled={isPending}>
+              <Button
+                variant="outline"
+                onClick={() => setIsEditing(false)}
+                disabled={isPending}
+              >
                 Cancel
               </Button>
               <Button onClick={handleUpdate} disabled={isPending}>
-                {isPending ? 'Saving...' : 'Save Changes'}
+                {isPending ? "Saving..." : "Save Changes"}
               </Button>
             </div>
           </div>
@@ -196,33 +209,42 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
             </div>
             {event.description && (
               <div className="flex items-start space-x-2">
-                <HiOutlineMenuAlt2 className="size-5 text-muted-foreground mt-0.5" />
+                <HiOutlineMenuAlt2 className="mt-0.5 size-5 text-muted-foreground" />
                 <p className="text-foreground">{event.description}</p>
               </div>
             )}
             {event.guests && (
               <div className="flex items-start space-x-2">
-                <HiOutlineUsers className="size-5 text-muted-foreground mt-0.5" />
+                <HiOutlineUsers className="mt-0.5 size-5 text-muted-foreground" />
                 <p className="text-foreground">{event.guests}</p>
               </div>
             )}
 
             <div className="flex justify-end space-x-2 pt-4">
-              <Button variant="outline" onClick={() => setIsEditing(true)} className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setIsEditing(true)}
+                className="flex items-center gap-2"
+              >
                 <FiEdit className="size-4" />
                 Edit
               </Button>
-              <Button variant="destructive" onClick={handleDelete} disabled={isPending} className="flex items-center gap-2">
+              <Button
+                variant="destructive"
+                onClick={handleDelete}
+                disabled={isPending}
+                className="flex items-center gap-2"
+              >
                 <FiTrash2 className="size-4" />
-                {isPending ? 'Deleting...' : 'Delete'}
+                {isPending ? "Deleting..." : "Delete"}
               </Button>
             </div>
           </div>
         )}
 
-        {error && <p className="mt-2 text-red-500 text-sm">{error}</p>}
-        {success && <p className="mt-2 text-green-500 text-sm">Success!</p>}
+        {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+        {success && <p className="mt-2 text-sm text-green-500">Success!</p>}
       </div>
     </div>
-  )
+  );
 }
