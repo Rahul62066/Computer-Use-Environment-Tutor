@@ -109,10 +109,10 @@ export default function EventPopover({
     >
       <div
         ref={popoverRef}
-        className="w-full max-w-md rounded-lg bg-white shadow-lg"
+        className="w-full max-w-md rounded-lg bg-card shadow-lg"
         onClick={handlePopoverClick}
       >
-        <div className="mb-2 flex items-center justify-between rounded-md bg-slate-100 p-1">
+        <div className="mb-2 flex items-center justify-between rounded-md bg-muted p-1">
           <HiOutlineMenuAlt4 />
           <Button
             variant="ghost"
@@ -133,13 +133,13 @@ export default function EventPopover({
             />
           </div>
           <div className="flex items-center justify-between">
-            <Button
+              <Button
               type="button"
               onClick={() => setEntryType("event")}
               className={cn(
                 entryType === "event"
                   ? "bg-blue-100 text-blue-700 hover:bg-blue-100 hover:text-blue-700"
-                  : "bg-transparent text-gray-700 hover:bg-gray-100"
+                  : "bg-transparent text-foreground hover:bg-secondary"
               )}
             >
               Event
@@ -150,7 +150,7 @@ export default function EventPopover({
               className={cn(
                 entryType === "task"
                   ? "bg-blue-100 text-blue-700 hover:bg-blue-100 hover:text-blue-700"
-                  : "bg-transparent text-gray-700 hover:bg-gray-100"
+                  : "bg-transparent text-foreground hover:bg-secondary"
               )}
             >
               Task
@@ -161,7 +161,7 @@ export default function EventPopover({
               className={cn(
                 entryType === "appointment"
                   ? "bg-blue-100 text-blue-700 hover:bg-blue-100 hover:text-blue-700"
-                  : "bg-transparent text-gray-700 hover:bg-gray-100"
+                  : "bg-transparent text-foreground hover:bg-secondary"
               )}
             >
               Appointment <sup className="bg-blue-500 text-white px-1 text-xs rounded">new</sup>
@@ -169,7 +169,7 @@ export default function EventPopover({
           </div>
 
           <div className="flex items-center space-x-3">
-            <FiClock className="size-5 text-gray-600" />
+            <FiClock className="size-5 text-muted-foreground" />
             <div className="flex items-center space-x-3 text-sm">
               <p>{dayjs(date).format("dddd, MMMM D")}</p>
               <AddTime onTimeSelect={setSelectedTime} />
@@ -181,13 +181,13 @@ export default function EventPopover({
           {/* Show guests field for events and appointments */}
           {(entryType === "event" || entryType === "appointment") && (
             <div className="flex items-center space-x-3">
-              <HiOutlineUsers className="size-5 text-slate-600" />
+              <HiOutlineUsers className="size-5 text-muted-foreground" />
               <Input
                 type="text"
                 name="guests"
                 placeholder="Add guests (comma-separated emails)"
                 className={cn(
-                  "w-full rounded-lg border-0 bg-slate-100 pl-7 placeholder:text-slate-600",
+                  "w-full rounded-lg border-0 bg-muted pl-7 placeholder:text-muted-foreground",
                   "focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0",
                 )}
               />
@@ -197,13 +197,13 @@ export default function EventPopover({
           {/* Show location field for appointments */}
           {entryType === "appointment" && (
             <div className="flex items-center space-x-3">
-              <FiMapPin className="size-5 text-slate-600" />
+              <FiMapPin className="size-5 text-muted-foreground" />
               <Input
                 type="text"
                 name="location"
                 placeholder="Add location"
                 className={cn(
-                  "w-full rounded-lg border-0 bg-slate-100 pl-7 placeholder:text-slate-600",
+                  "w-full rounded-lg border-0 bg-muted pl-7 placeholder:text-muted-foreground",
                   "focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0",
                 )}
               />
@@ -213,14 +213,14 @@ export default function EventPopover({
           {/* Show duration field for appointments */}
           {entryType === "appointment" && (
             <div className="flex items-center space-x-3">
-              <FiClock className="size-5 text-slate-600" />
+              <FiClock className="size-5 text-muted-foreground" />
               <Input
                 type="number"
                 name="duration"
                 placeholder="Duration (minutes)"
                 defaultValue="60"
                 className={cn(
-                  "w-full rounded-lg border-0 bg-slate-100 pl-7 placeholder:text-slate-600",
+                  "w-full rounded-lg border-0 bg-muted pl-7 placeholder:text-muted-foreground",
                   "focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0",
                 )}
               />
@@ -228,20 +228,20 @@ export default function EventPopover({
           )}
 
           <div className="flex items-center space-x-3">
-            <HiOutlineMenuAlt2 className="size-5 text-slate-600" />
+            <HiOutlineMenuAlt2 className="size-5 text-muted-foreground" />
             <Input
               type="text"
               name="description"
               placeholder="Add description"
               className={cn(
-                "w-full rounded-lg border-0 bg-slate-100 pl-7 placeholder:text-slate-600",
+                "w-full rounded-lg border-0 bg-muted pl-7 placeholder:text-muted-foreground",
                 "focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0",
               )}
             />
           </div>
 
           <div className="flex items-center space-x-3">
-            <IoMdCalendar className="size-5 text-slate-600" />
+            <IoMdCalendar className="size-5 text-muted-foreground" />
             <div className="">
               <div className="flex items-center space-x-3 text-sm">
                 {" "}
@@ -250,9 +250,9 @@ export default function EventPopover({
               </div>
               <div className="flex items-center space-x-1 text-xs">
                 <span>Busy</span>
-                <div className="h-1 w-1 rounded-full bg-gray-500"></div>
+                <div className="h-1 w-1 rounded-full bg-muted-foreground"></div>
                 <span>Default visibility</span>{" "}
-                <div className="h-1 w-1 rounded-full bg-gray-500"></div>
+                <div className="h-1 w-1 rounded-full bg-muted-foreground"></div>
                 <span>Notify 30 minutes before</span>
               </div>
             </div>

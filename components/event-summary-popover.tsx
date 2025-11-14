@@ -108,7 +108,7 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
     >
       <div
         ref={popoverRef}
-        className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg"
+        className="w-full max-w-md rounded-lg bg-card p-6 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
@@ -131,7 +131,7 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
             </div>
 
             <div className="flex items-center space-x-3">
-              <FiClock className="size-5 text-gray-600" />
+              <FiClock className="size-5 text-muted-foreground" />
               <div className="flex items-center space-x-2">
                 <Input
                   type="date"
@@ -149,28 +149,28 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
             </div>
 
             <div className="flex items-center space-x-3">
-              <HiOutlineUsers className="size-5 text-slate-600" />
+              <HiOutlineUsers className="size-5 text-muted-foreground" />
               <Input
                 type="text"
                 value={guests}
                 onChange={(e) => setGuests(e.target.value)}
                 placeholder="Add guests (comma-separated emails)"
                 className={cn(
-                  "w-full rounded-lg border-0 bg-slate-100 pl-7 placeholder:text-slate-600",
+                  "w-full rounded-lg border-0 bg-muted pl-7 placeholder:text-muted-foreground",
                   "focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0",
                 )}
               />
             </div>
 
             <div className="flex items-center space-x-3">
-              <HiOutlineMenuAlt2 className="size-5 text-slate-600" />
+              <HiOutlineMenuAlt2 className="size-5 text-muted-foreground" />
               <Input
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Add description"
                 className={cn(
-                  "w-full rounded-lg border-0 bg-slate-100 pl-7 placeholder:text-slate-600",
+                  "w-full rounded-lg border-0 bg-muted pl-7 placeholder:text-muted-foreground",
                   "focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0",
                 )}
               />
@@ -190,20 +190,20 @@ export function EventSummaryPopover({ isOpen, onClose, event }: EventSummaryPopo
             <div>
               <p className="text-2xl font-semibold">{event.title}</p>
             </div>
-            <div className="flex items-center space-x-2 text-gray-600">
+            <div className="flex items-center space-x-2 text-muted-foreground">
               <FiClock className="size-4" />
               <p>{dayjs(event.date).format("dddd, MMMM D, YYYY h:mm A")}</p>
             </div>
             {event.description && (
               <div className="flex items-start space-x-2">
-                <HiOutlineMenuAlt2 className="size-5 text-gray-600 mt-0.5" />
-                <p className="text-gray-700">{event.description}</p>
+                <HiOutlineMenuAlt2 className="size-5 text-muted-foreground mt-0.5" />
+                <p className="text-foreground">{event.description}</p>
               </div>
             )}
             {event.guests && (
               <div className="flex items-start space-x-2">
-                <HiOutlineUsers className="size-5 text-gray-600 mt-0.5" />
-                <p className="text-gray-700">{event.guests}</p>
+                <HiOutlineUsers className="size-5 text-muted-foreground mt-0.5" />
+                <p className="text-foreground">{event.guests}</p>
               </div>
             )}
 
