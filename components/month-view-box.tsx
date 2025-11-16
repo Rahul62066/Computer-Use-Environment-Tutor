@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import React from "react";
 import { EventRenderer } from "./event-renderer";
 
-
 export default function MonthViewBox({
   day,
   rowIndex,

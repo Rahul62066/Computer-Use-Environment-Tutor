@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { EventRenderer } from "./event-renderer";
 
-
 export default function WeekView() {
   const [currentTime, setCurrentTime] = useState(dayjs());
   const { openPopover, events } = useEventStore();
@@ -25,7 +24,9 @@ export default function WeekView() {
       <div className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr_1fr_1fr] place-items-center px-4 py-2">
         <div className="w-16 border-r border-border">
           <div className="relative h-16">
-            <div className="absolute top-2 text-xs text-muted-foreground">GMT +2</div>
+            <div className="absolute top-2 text-xs text-muted-foreground">
+              GMT +2
+            </div>
           </div>
         </div>
 
@@ -74,9 +75,9 @@ export default function WeekView() {
               return (
                 <div key={index} className="relative border-r border-border">
                   {getHours.map((hour, i) => (
-                        <div
-                          key={i}
-                          className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-border hover:bg-muted/40"
+                    <div
+                      key={i}
+                      className="relative flex h-16 cursor-pointer flex-col items-center gap-y-2 border-b border-border hover:bg-muted/40"
                       onClick={() => {
                         setDate(dayDate.hour(hour.hour()));
                         openPopover();

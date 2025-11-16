@@ -23,7 +23,9 @@ export default function HeaderRight() {
       } else if (window.matchMedia) {
         setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   function toggleTheme() {
