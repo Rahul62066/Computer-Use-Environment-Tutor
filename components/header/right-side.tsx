@@ -39,7 +39,9 @@ export default function HeaderRight() {
         document.documentElement.classList.remove("dark");
         localStorage.setItem("theme", "light");
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
