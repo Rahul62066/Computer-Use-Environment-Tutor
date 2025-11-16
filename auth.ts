@@ -5,6 +5,7 @@ import { db } from "./db/drizzle"
 import { dbServer } from "./db/drizzle-server"
 import { users, accounts, sessions, verificationTokens } from "./db/schema"
 import { eq, and } from "drizzle-orm"
+import type { AdapterAccountType } from "next-auth/adapters"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -32,7 +33,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, account, user }) {
       // Initial sign in - save account data to database
-      if (account && user) {
+      // Ensure we have a string user.id before using it in DB queries
+      if (account && user && typeof user.id === "string") {
         console.log('JWT callback - Initial sign in', {
           userId: user.id,
           provider: account.provider,
@@ -65,7 +67,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token_type: account.token_type,
                 scope: account.scope,
                 id_token: account.id_token,
-                session_state: account.session_state,
+                // session_state can be JsonValue (number|string/etc). Convert to string or null for the DB column.
+                session_state:
+                  account.session_state == null
+                    ? null
+                    : String(account.session_state),
               })
               .where(
                 and(
@@ -78,16 +84,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // Insert new account
             await dbServer.insert(accounts).values({
               userId: user.id,
-              type: account.type,
-              provider: account.provider,
-              providerAccountId: account.providerAccountId,
+              // account.type is ProviderType; the DB column expects AdapterAccountType
+              // Cast via unknown to AdapterAccountType to satisfy the Drizzle types.
+              type: account.type as unknown as AdapterAccountType,
+              provider: account.provider as string,
+              providerAccountId: account.providerAccountId as string,
               access_token: account.access_token,
               refresh_token: account.refresh_token,
               expires_at: account.expires_at,
               token_type: account.token_type,
               scope: account.scope,
               id_token: account.id_token,
-              session_state: account.session_state,
+              // normalize session_state to string|null
+              session_state:
+                account.session_state == null ? null : String(account.session_state),
             });
             console.log('Inserted new account into database');
           }
