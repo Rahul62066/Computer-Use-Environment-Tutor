@@ -13,7 +13,7 @@ export default async function SignInPage() {
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="w-full max-w-md space-y-8 px-4">
         <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight">Google Calendar Clone</h1>
+          <h1 className="text-4xl font-bold tracking-tight">Google Calendar</h1>
           <p className="mt-2 text-muted-foreground">
             Sign in to manage your events and schedule
           </p>
